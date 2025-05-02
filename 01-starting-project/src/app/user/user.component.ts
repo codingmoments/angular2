@@ -1,19 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-/* One way of defining class
-type User = {
-  id: string;
-  name: string;
-  avatar: string;
-}
-*/
-
-// Another way of defining class
-interface User {
-  id: string;
-  name: string;
-  avatar: string;
-}
+import { type User } from './user.model';
 
 @Component({
   selector: 'app-user',
@@ -24,6 +11,7 @@ interface User {
 })
 export class UserComponent {
   @Input({ required: true }) user!: User;
+  @Input({ required: true }) selected!: boolean;
 
   @Output() select = new EventEmitter<string>();
 
