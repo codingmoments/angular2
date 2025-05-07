@@ -1,4 +1,4 @@
-@if (!annualData) {
+@if (!annualData()) {
 <p class="center">Please enter some values and press "Calculate".</p>
 } @else {
 <table>
@@ -12,13 +12,13 @@
     </tr>
   </thead>
   <tbody>
-    @for (data of annualData; track data.year) {
+    @for (data of annualData(); track data.year) {
     <tr>
       <td>{{ data.year }}</td>
-      <td>{{ data.valueEndOfYear | currency:"INR" }}</td>
-      <td>{{ data.interest | currency:"INR" }}</td>
-      <td>{{ data.totalInterest | currency:"INR" }}</td>
-      <td>{{ data.totalAmountInvested | currency:"INR" }}</td>
+      <td>{{ data.valueEndOfYear | currency : "INR" }}</td>
+      <td>{{ data.interest | currency : "INR" }}</td>
+      <td>{{ data.totalInterest | currency : "INR" }}</td>
+      <td>{{ data.totalAmountInvested | currency : "INR" }}</td>
     </tr>
     }
   </tbody>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { type InvestmentInput } from './investment-input.model';
@@ -12,10 +12,12 @@ import { InvestmentResultsComponent } from './investment-results/investment-resu
   imports: [HeaderComponent, UserInputComponent, InvestmentResultsComponent],
 })
 export class AppComponent {
-  annualData?: AnnualData[];
+  // annualData?: AnnualData[];
+  annualData = signal<AnnualData[] | undefined>(undefined);
 
   onInputSubmit(investmentInput: InvestmentInput) {
-    this.annualData = this.calculateInvestmentResults(investmentInput);
+    // this.annualData = this.calculateInvestmentResults(investmentInput);
+    this.annualData.set(this.calculateInvestmentResults(investmentInput));
   }
 
   private calculateInvestmentResults(investmentInput: InvestmentInput) {
