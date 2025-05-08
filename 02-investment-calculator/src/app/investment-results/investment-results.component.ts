@@ -1,4 +1,4 @@
-import { Component, inject, input, Input } from '@angular/core';
+import { Component, computed, inject, input, Input } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { InvestmentService } from '../investement.service';
 
@@ -12,7 +12,12 @@ import { InvestmentService } from '../investement.service';
 export class InvestmentResultsComponent {
   investementService = inject(InvestmentService);
 
-  get annualData() {
-    return this.investementService.annualData();
-  }
+  // annualData is still a signal. It does not return the WriteableSignal
+  // from the investementService. It returns a computed read-only signal.
+  // With this pattern, you therefore make sure that you do not accidentally
+  // change the data managed by the service outside the service.
+  annualData = computed(() => this.investementService.annualData());
+  // Alternative solution
+  // asReadOnly() gives you read-only version of the signal
+  // annualData1 = this.investementService.annualData.asReadonly();
 }
