@@ -2,7 +2,9 @@ import {
   Component,
   ElementRef,
   QueryList,
+  viewChild,
   ViewChild,
+  viewChildren,
   ViewChildren,
 } from '@angular/core';
 import { ButtonComponent } from '../../../shared/button/button.component';
@@ -17,21 +19,26 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './new-ticket.component.css',
 })
 export class NewTicketComponent {
-  @ViewChild('form') form?: ElementRef<HTMLFormElement>;
+  // @ViewChild('form') form?: ElementRef<HTMLFormElement>;
+  private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
 
-  @ViewChild(ButtonComponent) button?: ElementRef<ButtonComponent>;
+  // @ViewChild(ButtonComponent) button?: ElementRef<ButtonComponent>;
+  private button = viewChild<ButtonComponent>(ButtonComponent);
 
-  @ViewChildren(ControlComponent) controls?: QueryList<ElementRef<ControlComponent>>[];
+  // @ViewChildren(ControlComponent) controls?: QueryList<ElementRef<ControlComponent>>[];
+  private controls = viewChildren(ControlComponent);
 
   onSubmit(title: string, ticketText: string) {
     console.log(title);
     console.log(ticketText);
-    console.dir(this.form);
+    console.dir(this.form()?.nativeElement);
+    console.dir(this.button());
+    console.dir(this.controls());
 
-    this.form?.nativeElement.reset();
+    this.form().nativeElement.reset();
 
     if (this.controls) {
-      this.controls.forEach((control) => {
+      this.controls().forEach((control) => {
         console.log(control);
       });
     }
