@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './new-ticket.component.css',
 })
 export class NewTicketComponent implements OnInit, AfterViewInit {
+  @ViewChild('form') form?: ElementRef<HTMLFormElement>;
   //private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
 
   // @ViewChild(ButtonComponent) button?: ElementRef<ButtonComponent>;
@@ -44,8 +45,6 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
-  @ViewChild('form') form?: ElementRef<HTMLFormElement>;
 
   ngOnInit(): void {
     console.log('AFTER INIT');
