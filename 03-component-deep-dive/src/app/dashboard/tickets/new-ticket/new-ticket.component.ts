@@ -2,7 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   OnInit,
+  output,
+  Output,
   QueryList,
   viewChild,
   ViewChild,
@@ -30,6 +33,9 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   // @ViewChildren(ControlComponent) controls?: QueryList<ElementRef<ControlComponent>>[];
   private controls = viewChildren(ControlComponent);
 
+  // @Output() add = new EventEmitter<{ title: string; text: string }>();
+  add = output<{ title: string; text: string }>();
+
   onSubmit(title: string, ticketText: string) {
     console.log(title);
     console.log(ticketText);
@@ -44,6 +50,8 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
         console.log(control);
       });
     }
+
+    this.add.emit({ title: title, text: ticketText });
   }
 
   ngOnInit(): void {
