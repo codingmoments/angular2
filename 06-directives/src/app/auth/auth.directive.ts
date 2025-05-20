@@ -8,10 +8,12 @@ import {
 } from '@angular/core';
 import { Permission } from './auth.model';
 import { AuthService } from './auth.service';
+import { LogDirective } from '../log.directive';
 
 @Directive({
   selector: '[appAuth]',
   standalone: true,
+  hostDirectives: [LogDirective]
 })
 export class AuthDirective {
   userType = input.required<Permission>({ alias: 'appAuth' });
