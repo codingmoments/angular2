@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, NgZone, OnInit, signal } from '@angular/core';
 
 import { InfoMessageComponent } from '../info-message/info-message.component';
 
@@ -9,8 +9,24 @@ import { InfoMessageComponent } from '../info-message/info-message.component';
   styleUrl: './counter.component.css',
   imports: [InfoMessageComponent],
 })
-export class CounterComponent {
+export class CounterComponent implements OnInit {
+  private zone = inject(NgZone);
+
   count = signal(0);
+
+  ngOnInit(): void {
+    // This timer HAS impact on the UI and the data that we manage
+    setTimeout(() => {
+      this.count.set(0);
+    }, 4000);
+
+    this.zone.runOutsideAngular(() => {
+      // This timer HAS NO impact on the UI and the data that we manage
+      setTimeout(() => {
+        console.log('Timeout!!!');
+      }, 5000);
+    });
+  }
 
   get debugOutput() {
     console.log('[Counter] "debugOutput" binding re-evaluated.');
