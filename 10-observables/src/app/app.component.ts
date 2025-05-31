@@ -6,7 +6,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 import { interval, map } from 'rxjs';
 
@@ -18,6 +18,9 @@ import { interval, map } from 'rxjs';
 export class AppComponent implements OnInit {
   clickCount = signal(0);
   clickCount$ = toObservable(this.clickCount);
+  interval$ = interval(1000);
+  intervalSignal = toSignal(this.interval$, { initialValue: 0 });
+
   private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
@@ -28,7 +31,7 @@ export class AppComponent implements OnInit {
       subscription.unsubscribe();
     });
 
-        // const subscription = interval(1000)
+    // const subscription = interval(1000)
     //   .pipe(map((val) => val * 2))
     //   .subscribe({
     //     next: (val) => console.log(val),
